@@ -1,0 +1,9 @@
+path: dataset_physical_singles_photos
+
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: Name
+  1: number
