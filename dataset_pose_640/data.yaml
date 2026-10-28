@@ -1,0 +1,9 @@
+path: dataset_pose_640
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: pokemon_card
+  
+kpt_shape: [4, 3]

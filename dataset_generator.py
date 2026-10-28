@@ -13,7 +13,7 @@ import sys
 CANVAS_SIZE = 640
 
 # Input Directories
-CARDS_ROOT = Path("images")
+CARDS_ROOT = Path("Card_Scans")
 BACKGROUNDS_ROOT = Path("backgrounds")
 
 # Output Directory
