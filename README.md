@@ -38,7 +38,7 @@ pip install -r requirements.txt
 4. Run the generator:
 ```bash
 # Usage: python dataset_generator.py [num_workers] [chunksize]
-python .\dataset_generator.py 8 25
+python .\dataset_generator.py 8 50
 ```
 
 ## Data Acquisition
@@ -57,10 +57,10 @@ Data to train OBB model was acquired from [Hasnat5](https://platform.ultralytics
 ## Model Training
 Training is handled via standard [Ultralytics YOLO](https://github.com/ultralytics/ultralytics) scripts.
 
-### Train Card Pose Corner Detection
+### Train Model Corner Detection example
 ```python
 from ultralytics import YOLO
-model = YOLO("yolo26n-pose.pt") # or custom pose baseline
+model = YOLO("yolo26n-pose.pt") # or obb baseline
 model.train(
     data="dataset_pose_640/data.yaml",
     epochs=5, # quick test run, change to train real model
@@ -72,23 +72,6 @@ model.train(
     optimizer="auto",
     project="runs",
     name="card_pose_model"
-)
-```
-### Train Name/Number OBB Model
-```python
-from ultralytics import YOLO
-model = YOLO("yolo26n-obb.pt") # or custom obb baseline
-model.train(
-    data="dataset_obb_640/data.yaml",
-    epochs=5, # quick test run, change to train real model
-    imgsz=640,
-    batch=16, # fit values to your hardware
-    workers=8, # fit values to your hardware
-    device=0,
-    patience=25,
-    optimizer="auto",
-    project="runs",
-    name="name_number_obb_model"
 )
 ```
 
