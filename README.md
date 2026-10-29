@@ -41,17 +41,22 @@ pip install -r requirements.txt
 python .\dataset_generator.py 8 25
 ```
 
-### What the Generator Does
+### Pose Data
+The Pose training data was created using **dataset_generator.py** on scanned cards and backgrounds. What is does:
 
 - **Perspective Warping:** Randomly scales, rotates ($\pm 35^\circ$), and applies 3D perspective distortion.
-- **Lighting & Reflections:** Simulates glare streaks across sleeves/cards, ambient brightness shifts, and out-of-focus camera blurs.
-- **Camera Noise:** Adds Gaussian sensor noise and dynamic drop shadows.
+- **Lighting and Reflections:** Simulates glare streaks across sleeves/cards, ambient brightness shifts, and out-of-focus camera blurs.
+- **Camera Noise:** Adds Gaussian sensor noise and drop shadows.
 - **Auto-Labeling:** Computes exact keypoints for top-left, top-right, bottom-right, and bottom-left corners in YOLO Pose format.
+
+### OBB Data
+
+Data to train OBB model was aquiered from [Hasnat5](https://platform.ultralytics.com/hasnat5/datasets/pokemon-2) and extended by hand.
 
 ## Model Training
 Training is handled via standard [Ultralytics YOLO](https://github.com/ultralytics/ultralytics) scripts.
 
-### Train Card Pose Model (Corner Detection)
+### Train Card Pose Corner Detection
 ```python
 from ultralytics import YOLO
 model = YOLO("yolo26n-pose.pt") # or custom pose baseline
@@ -88,14 +93,14 @@ model.train(
 
 ## Mobile Export (LiteRT / TFLite)
 
-To run these models on Android with high frame rates using Google's LiteRT (formerly TFLite), export the trained PyTorch weights (**best.pt**, linux only):
+To run these models on Android with high frame rates using Google's LiteRT, export the trained PyTorch weights (**best.pt**, linux only):
 
 ```bash
 # Export Pose Model to Float32 LiteRT
-yolo export model="runs/card_pose_model/weights/best.pt" format=litert quantize=fp32
+yolo export model="runs/model_name/weights/best.pt" format=litert quantize=fp32
 
 # Export with INT8 Quantization (for edge NPU acceleration)
-yolo export model="runs/card_pose_model/weights/best.pt" format=litert quantize=8 data="data.yaml"
+yolo export model="runs/model_name/weights/best.pt" format=litert quantize=8 data="data.yaml"
 ```
 
 ## Pre-trained Weights

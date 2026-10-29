@@ -11,7 +11,7 @@ def main():
         imgsz=640,
         batch=16,
         workers=6,
-        device=0,
+        device="cpu", # to run on GPU you need to download CUDA support I used: pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118 
         patience=25,
         optimizer="auto",
         project="runs",

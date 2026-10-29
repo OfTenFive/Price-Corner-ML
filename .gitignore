@@ -1,3 +1,7 @@
 .venv
 
 /runs
+/test_dataset/labels/train.cache
+/test_dataset/labels/val.cache
+
+*.pt
