@@ -6,7 +6,7 @@ def main():
 
     model = YOLO("yolo26n-pose.pt")
     model.train(
-        data="dataset_pose_640/data.yaml",
+        data="test_dataset/data.yaml",
         epochs=5, # quick test run change to train real model
         imgsz=640,
         batch=16,

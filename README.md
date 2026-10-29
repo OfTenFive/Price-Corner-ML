@@ -3,14 +3,14 @@ Price Corner identifies cards on-device using local ML models, then links straig
 
 ## Features
 
-- **Language support** - English is the officially supported and tested language. The OCR engine has built-in recognition for Japanese, Korean, and Chinese (Simplified & Traditional) as well and other. The card database currently includes ENglish, Japanese and Chinese (Traditional) entries - with room to expand further down the line.
-- **Instant on-device scanning** - card detection and OCR run locally, no network round-trip needed to identify a card
+- **Language support** - English is the officially supported and tested language. The OCR engine has built-in recognition for Japanese, Korean, and Chinese (Simplified & Traditional) as well as other. The card database currently includes English, Japanese and Chinese (Traditional) entries - with room to expand further down the line.
+- **Instant on-device scanning** - card detection and OCR run locally, no network round-trip needed to identify a card.
 - **Real marketplace links, not estimates** - jumps straight to live Cardmarket / TCGPlayer / PriceCharting / listings for the identified card
 - **No account, no sign-up, no scan limits**
 - **Quick re-check, not a collection tracker** - star a card and it's remembered after you close the app, so you can look up its price again later without rescanning (search box included to find it by name). Not meant for organizing or managing large collections.
 - **Card Lookup** - there is a fallback to card lookup option if for whatever reason the scanner refuses to work.
 
-Here is short [demo](https://youtu.be/6YLQzMhJt94) if you want to see it in action.
+Here is a short [demo](https://youtu.be/6YLQzMhJt94) if you want to see it in action.
 
 > *Looking for the Android App?* **Play Store**: [link once published] 
 
@@ -26,8 +26,8 @@ It provides everything needed to generate synthetic training data, train custom 
 ## Installation and Usage
 ### Installation
 ```bash
-git clone [https://github.com/OfTenFive/price-corner-ml.git](https://github.com/OfTenFive/price-corner-ml.git)
-cd price-corner-ai
+git clone https://github.com/OfTenFive/price-corner-ml.git
+cd price-corner-ml
 pip install -r requirements.txt
 ```
 
@@ -41,8 +41,9 @@ pip install -r requirements.txt
 python .\dataset_generator.py 8 25
 ```
 
+## Data Acquisition
 ### Pose Data
-The Pose training data was created using **dataset_generator.py** on scanned cards and backgrounds. What is does:
+The Pose training data was created using **dataset_generator.py** on scanned cards and backgrounds. What it does:
 
 - **Perspective Warping:** Randomly scales, rotates ($\pm 35^\circ$), and applies 3D perspective distortion.
 - **Lighting and Reflections:** Simulates glare streaks across sleeves/cards, ambient brightness shifts, and out-of-focus camera blurs.
@@ -51,7 +52,7 @@ The Pose training data was created using **dataset_generator.py** on scanned car
 
 ### OBB Data
 
-Data to train OBB model was aquiered from [Hasnat5](https://platform.ultralytics.com/hasnat5/datasets/pokemon-2) and extended by hand.
+Data to train OBB model was acquired from [Hasnat5](https://platform.ultralytics.com/hasnat5/datasets/pokemon-2) and extended by hand.
 
 ## Model Training
 Training is handled via standard [Ultralytics YOLO](https://github.com/ultralytics/ultralytics) scripts.
@@ -64,8 +65,8 @@ model.train(
     data="dataset_pose_640/data.yaml",
     epochs=5, # quick test run, change to train real model
     imgsz=640,
-    batch=16, # fit valuse to your hardware
-    workers=8, # fit valuse to your hardware
+    batch=16, # fit values to your hardware
+    workers=8, # fit values to your hardware
     device=0,
     patience=25,
     optimizer="auto",
@@ -81,8 +82,8 @@ model.train(
     data="dataset_obb_640/data.yaml",
     epochs=5, # quick test run, change to train real model
     imgsz=640,
-    batch=16, # fit valuse to your hardware
-    workers=8, # fit valuse to your hardware
+    batch=16, # fit values to your hardware
+    workers=8, # fit values to your hardware
     device=0,
     patience=25,
     optimizer="auto",
@@ -93,7 +94,7 @@ model.train(
 
 ## Mobile Export (LiteRT / TFLite)
 
-To run these models on Android with high frame rates using Google's LiteRT, export the trained PyTorch weights (**best.pt**, linux only):
+To run these models on Android with high frame rates using Google's LiteRT, export the trained PyTorch weights (**best.pt**, Linux only):
 
 ```bash
 # Export Pose Model to Float32 LiteRT
@@ -107,7 +108,7 @@ yolo export model="runs/model_name/weights/best.pt" format=litert quantize=8 dat
 
 Pre-trained weights (.pt and .tflite formats) for both card corner detection and name/number localization are available under the [models](./models/).
 
-The text recognition step in Price Corner uses PP-OCRv6 tiny, used unmodyfied from [huggingface](https://huggingface.co/PaddlePaddle/PP-OCRv6_tiny_rec_onnx).
+The text recognition step in Price Corner uses PP-OCRv6 tiny, used unmodified  from [huggingface](https://huggingface.co/PaddlePaddle/PP-OCRv6_tiny_rec_onnx).
 
 
 ## Credits
@@ -126,4 +127,4 @@ Price Corner is an independent, fan-made tool and is not affiliated with, endors
 
 ## Support 
 
-You can support me by staring the repo or by sending me a [donation](https://ko-fi.com/oftenfive) - all voluntary.
+You can support me by starring the repo or by sending me a [donation](https://ko-fi.com/oftenfive) - all voluntary.

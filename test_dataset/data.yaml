@@ -1,4 +1,4 @@
-path: dataset_pose_640
+path: test_dataset
 train: images/train
 val: images/val
 test: images/test
